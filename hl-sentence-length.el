@@ -26,8 +26,9 @@
 ;; Minor mode to highlight sentences based on the number of words.
 ;; This is intended to help writers focus on varying their sentence
 ;; lengths. By default it cycles trough eight different colors. To
-;; increase this set `hl-sentence-length-cycle' and customize the
-;; faces for higher word counts or define new ones.
+;; increase this set `hl-sentence-length-cycle' and define new
+;; additional faces. To change the clustering of word lengths
+;; customize `hl-sentence-length-roughness'.
 ;;
 ;;; Code:
 
@@ -55,23 +56,12 @@
 (defface hl-sentence-length-face-8
   '((t (:background "#707070")))
   "Face for sentences of length 8.")
-;; Faces 9-12 declared just for convenience. Easily customize using
-;; `customize-face' or use-package's `:custom-face' keyword.
-(defface hl-sentence-length-face-9
-  '((t (:background "#ffffff")))
-  "Face for sentences of length 9.")
-(defface hl-sentence-length-face-10
-  '((t (:background "#ffffff")))
-  "Face for sentences of length 10.")
-(defface hl-sentence-length-face-11
-  '((t (:background "#ffffff")))
-  "Face for sentences of length 11.")
-(defface hl-sentence-length-face-12
-  '((t (:background "#ffffff")))
-  "Face for sentences of length 12.")
 
 (defvar hl-sentence-length-cycle 8
   "Number of faces to cycle trough.")
+
+(defvar hl-sentence-length-roughness 3
+  "Size of groups to cluster sentence lengths into.")
 
 (defun hl-sentence-length-sentence-beginning ()
   "Return point at beginning of the current sentence."
@@ -97,7 +87,9 @@
 (defun hl-sentence-length-sentence-face ()
   "Return the appropriate face for the current sentence."
   (let* ((length (hl-sentence-length-sentence-length))
-         (modulo (mod length hl-sentence-length-cycle))
+         (modulo (mod
+                  (+ 1 (/ (- length 1) hl-sentence-length-roughness))
+                  hl-sentence-length-cycle))
          (facenumber (if (eq modulo 0)
                          hl-sentence-length-cycle
                        modulo)))
