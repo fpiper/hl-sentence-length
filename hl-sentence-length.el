@@ -128,4 +128,5 @@
   (hl-sentence-length-remove-highlights)
   (hl-sentence-length-create-highlights))
 
+(provide 'hl-sentence-length)
 ;;; hl-sentence-length.el ends here
