@@ -1,0 +1,7 @@
+* ~hl-sentence-length~ mode
+
+[[file:example.png]]
+
+Varying sentence lengths helps engage the reader. However it is hard to keep track of sentence length while writing. To help this mode highlights all sentences in the current buffer based on their word count.
+
+~hl-sentence-length-cycle~ can be customized to change the number of different faces that are used.
