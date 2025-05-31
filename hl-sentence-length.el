@@ -102,6 +102,7 @@
     (overlay-put overlay 'origin 'hl-sentence-length)
     (overlay-put overlay 'face face)))
 
+;;;###autoload
 (define-minor-mode hl-sentence-length-mode
   "Highlight the word count of sentences."
   nil nil nil
@@ -114,7 +115,7 @@
 (defun hl-sentence-length-create-highlights ()
   (save-mark-and-excursion
     (let ((pmax (point-max)))
-      (beginning-of-buffer)
+      (goto-char (point-min))
       (while (< (point) pmax)
         (forward-sentence)
         (hl-sentence-length-highlight-sentence)))))
